@@ -1,7 +1,7 @@
 import {legacy_createStore} from "redux";
-import {weatherReducer} from "../reducer/weatherReducer.js";
+import {cityReducer} from "../reducer/cityReducer.js";
 
 const initialState = {
-    city: 'test'
+    city: ''
 }
-export const store = legacy_createStore(weatherReducer, initialState);
+export const store = legacy_createStore(cityReducer, initialState);

@@ -1,9 +1,15 @@
-const Form = ({setCity}) => {
+import {useDispatch} from "react-redux";
+import {changeCity} from "../actions/weatherActions.js";
 
-    const handleClickGetWeather = e => {
+const Form = () => {
+    const dispatch = useDispatch();
+
+    const handleClickGetWeather = (e) => {
         e.preventDefault();
         const city = e.target.city.value.trim();
-        setCity(city);
+        if (city) {
+            dispatch(changeCity(city));
+        }
         e.target.city.value = '';
     }
 

@@ -1,7 +1,9 @@
 import {api_key, base_url, weather_cache_time} from "../utils/constants.js";
 import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
 
-const Weather = ({city}) => {
+const Weather = () => {
+    const city = useSelector(state => state.city);
     const [weather, setWeather] = useState({});
     const [message, setMessage] = useState('Enter city name');
     const [timeStamp, setTimeStamp] = useState(0);
@@ -58,5 +60,3 @@ const Weather = ({city}) => {
 };
 
 export default Weather;
-
-
