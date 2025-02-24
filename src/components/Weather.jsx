@@ -1,12 +1,15 @@
 import {api_key, base_url, weather_cache_time} from "../utils/constants.js";
 import {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
+import {putWeather} from "../actions/weatherActions.js";
 
 const Weather = () => {
-    const city = useSelector(state => state.city);
-    const [weather, setWeather] = useState({});
+    const city = useSelector(state => state.city.city);
     const [message, setMessage] = useState('Enter city name');
     const [timeStamp, setTimeStamp] = useState(0);
+    const dispatch = useDispatch();
+    const weather = useSelector(state => state.weather.weather);
 
     const getWeather = async () => {
         try {
@@ -15,19 +18,17 @@ const Weather = () => {
                 throw new Error('Enter correct city name');
             }
             const data = await response.json();
-            setWeather({
-                city: data.name,
-                country: data.sys.country,
-                temp: data.main.temp,
-                pressure: data.main.pressure,
-                sunset: data.sys.sunset * 1000
-            })
+            console.log("API response data:", data);
+            dispatch(putWeather(data));
+
             setTimeStamp(Date.now());
             setMessage('');
         } catch (e) {
             setMessage(e.message);
         }
     }
+
+    console.log("weather:", weather);
 
     useEffect(() => {
         if (city) {
@@ -46,10 +47,11 @@ const Weather = () => {
         <div className={'infoWeath'}>
             {!message &&
                 <>
-                    <p>Location: {weather.country}, {weather.city}</p>
+                    <p>Location: {weather.city}, {weather.country}</p>
                     <p>Temp: {weather.temp}</p>
                     <p>Pressure: {weather.pressure}</p>
-                    <p>Sunset: {new Date(weather.sunset).toLocaleTimeString()}</p>
+                    <p>Sunset: {new Date(weather.sunset * 1000).toLocaleTimeString()}</p>
+
                 </>
             }
             {message}

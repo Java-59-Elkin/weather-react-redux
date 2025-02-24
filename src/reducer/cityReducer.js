@@ -1,6 +1,10 @@
 import {CHANGE_CITY} from "../actions/weatherActions.js";
 
-export const cityReducer = (state, action) => {
+const initialState = {
+    city: ''
+}
+
+export const cityReducer = (state = initialState, action) => {
     switch (action.type) {
         case CHANGE_CITY:
             return {...state, city: action.payload};
