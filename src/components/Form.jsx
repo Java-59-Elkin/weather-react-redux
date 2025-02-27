@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
-import {putMessage, putWeatherInfo} from "../actions/weatherAction.js";
 import {api_key, base_url, weather_cache_time} from "../utils/constants.js";
+import {putMessage, putWeatherInfo} from "../features/weather/weatherSlice.js";
 
 const Form = () => {
     const dispatch = useDispatch();
