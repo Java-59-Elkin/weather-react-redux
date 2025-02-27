@@ -1,20 +1,17 @@
-import {PUT_WEATHER} from "../actions/weatherActions.js";
+import {PUT_MESSAGE, PUT_WEATHER_INFO} from "../actions/weatherAction";
 
-export const weatherReducer = (state, action) => {
+const initialState = {
+    weatherInfo: {},
+    message: 'Enter city name'
+}
+
+export const weatherReducer = (state = initialState, action) => {
     switch (action.type) {
-        case PUT_WEATHER:
-            return {
-                ...state, weather: {
-                    country: action.payload.sys.country,
-                    city: action.payload.name,
-                    temp: action.payload.main.temp,
-                    pressure: action.payload.main.pressure,
-                    sunset: action.payload.sys.sunset,
-                }
-            };
+        case PUT_WEATHER_INFO:
+            return {...state, weatherInfo: action.payload}
+        case PUT_MESSAGE:
+            return {...state, message: action.payload}
         default:
             return state;
     }
-
 }
-
