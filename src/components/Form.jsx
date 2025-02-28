@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
-import {api_key, base_url, weather_cache_time} from "../utils/constants.js";
-import {putMessage, putWeatherInfo} from "../features/weather/weatherSlice.js";
+import {fetchWeather} from "../features/api/asyncWeatherAction.js";
+import {weather_cache_time} from "../utils/constants.js";
 
 const Form = () => {
     const dispatch = useDispatch();
@@ -10,23 +10,7 @@ const Form = () => {
         e.preventDefault();
         const city = e.target.city.value.trim();
         if (city !== name || Date.now() - timestamp > weather_cache_time) {
-            fetch(`${base_url}?q=${city}&appid=${api_key}&units=metric`)
-                .then(result => result.json())
-                .then(data => {
-                    dispatch(putWeatherInfo({
-                        country: data.sys.country,
-                        city: data.name,
-                        temp: data.main.temp,
-                        pressure: data.main.pressure,
-                        sunset: data.sys.sunset * 1000,
-                        timestamp: Date.now()
-                    }))
-                    dispatch(putMessage(''))
-                })
-                .catch(e => {
-                    console.log(e);
-                    dispatch(putMessage('Enter correct city name'));
-                })
+           dispatch(fetchWeather(city));
         }
         e.target.city.value = '';
     }

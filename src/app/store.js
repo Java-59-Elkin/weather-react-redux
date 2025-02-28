@@ -1,8 +1,9 @@
 import {configureStore} from "@reduxjs/toolkit";
-import weather from "../features/weather/weatherSlice.js";
+import weatherInfo from "../features/slices/weatherSlice.js";
+import message from "../features/slices/messageSlice.js";
 
 export const store = configureStore({
     reducer: {
-        weather
+        weatherInfo, message
     }
 });
